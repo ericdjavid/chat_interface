@@ -4,11 +4,11 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-const data = [
+const candidateData = [
     { name: 'Jan', candidates: 4000 },
     { name: 'Feb', candidates: 3000 },
     { name: 'Mar', candidates: 2000 },
@@ -16,6 +16,16 @@ const data = [
     { name: 'May', candidates: 1890 },
     { name: 'Jun', candidates: 2390 },
     { name: 'Jul', candidates: 3490 },
+];
+
+const questionData = [
+    { name: 'Jan', answered: 300 },
+    { name: 'Feb', answered: 450 },
+    { name: 'Mar', answered: 380 },
+    { name: 'Apr', answered: 400 },
+    { name: 'May', answered: 350 },
+    { name: 'Jun', answered: 500 },
+    { name: 'Jul', answered: 480 },
 ];
 
 const menuItems = [
@@ -44,7 +54,7 @@ export default function Dashboard() {
             </aside>
 
             {/* Main Content */}
-            <main className="flex-1 p-10">
+            <main className="flex-1 p-10 bg-gradient-to-br from-blue-500 to-purple-600 overflow-y-auto">
                 <Alert className="mb-6">
                     <Avatar className="h-10 w-10">
                         <AvatarImage src="/avatar.png" alt="Candidate" />
@@ -59,24 +69,45 @@ export default function Dashboard() {
                     </AlertDescription>
                 </Alert>
 
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Candidate Applications</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="h-[300px]">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <LineChart data={data}>
-                                    <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="name" />
-                                    <YAxis />
-                                    <Tooltip />
-                                    <Line type="monotone" dataKey="candidates" stroke="#8884d8" />
-                                </LineChart>
-                            </ResponsiveContainer>
-                        </div>
-                    </CardContent>
-                </Card>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Candidate Applications</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="h-[300px]">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <LineChart data={candidateData}>
+                                        <CartesianGrid strokeDasharray="3 3" />
+                                        <XAxis dataKey="name" />
+                                        <YAxis />
+                                        <Tooltip />
+                                        <Line type="monotone" dataKey="candidates" stroke="#8884d8" />
+                                    </LineChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Answered Questions</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="h-[300px]">
+                                <ResponsiveContainer width="100%" height="100%">
+                                    <BarChart data={questionData}>
+                                        <CartesianGrid strokeDasharray="3 3" />
+                                        <XAxis dataKey="name" />
+                                        <YAxis />
+                                        <Tooltip />
+                                        <Bar dataKey="answered" fill="#82ca9d" />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </div>
             </main>
         </div>
     );
